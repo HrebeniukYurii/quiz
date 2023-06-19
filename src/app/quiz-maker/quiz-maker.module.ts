@@ -6,6 +6,7 @@ import { QuizCategorySelectorComponent } from './quiz-category-selector/quiz-cat
 import { ReactiveFormsModule } from '@angular/forms';
 import { MaterialAppModule } from '../material.module';
 import { SharedModule } from '../shared/shared.module';
+import { QuizQuestionsComponent } from './quiz-questions/quiz-questions.component';
 
 @NgModule({
   imports: [
@@ -15,6 +16,10 @@ import { SharedModule } from '../shared/shared.module';
     MaterialAppModule,
     SharedModule,
   ],
-  declarations: [QuizMakerComponent, QuizCategorySelectorComponent],
+  declarations: [
+    QuizMakerComponent,
+    QuizCategorySelectorComponent,
+    QuizQuestionsComponent,
+  ],
 })
 export class QuizMakerModule {}

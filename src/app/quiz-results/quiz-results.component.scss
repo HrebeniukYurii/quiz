@@ -1,0 +1,26 @@
+.quiz-score {
+  align-self: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 14px;
+
+  span {
+    display: block;
+  }
+}
+
+.bad-score {
+  background-color: red;
+  color: white;
+}
+
+.medium-score {
+  background-color: yellow;
+  color: black;
+}
+
+.excelent-score {
+  background-color: green;
+  color: white;
+}

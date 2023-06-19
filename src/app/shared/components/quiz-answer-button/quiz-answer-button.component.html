@@ -1,0 +1,9 @@
+<button
+  type="button"
+  [class]="classNames"
+  [disabled]="isDisabled"
+  [ngClass]="{ 'quiz-button-selected': isSelectedAnswer}"
+  (click)="clickEvent.emit(answerText)"
+  >
+  <span [innerHTML]="answerText"></span>
+</button>

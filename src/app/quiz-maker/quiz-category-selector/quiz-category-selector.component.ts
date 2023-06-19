@@ -1,16 +1,15 @@
-import { Component, Input, OnInit } from '@angular/core';
-import { Observable } from 'rxjs';
-import { QuizCategoryItem } from '../interface/quiz-category-item.interface';
+import { Component, Input, OnDestroy } from '@angular/core';
+import { Observable, Subscription, finalize } from 'rxjs';
+import { QuizCategoryItem } from '../../shared/interface/quiz-category-item.interface';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { DifficultyLevel } from '../enum/difficulty.enum';
-import { QuizMakerService } from '../quiz-maker.service';
+import { DifficultyLevel } from '../../shared/enum/difficulty.enum';
+import { QuizService } from '../../shared/quiz.service';
 
 @Component({
   selector: 'app-quiz-category-selector',
   templateUrl: './quiz-category-selector.component.html',
-  styleUrls: ['./quiz-category-selector.component.scss'],
 })
-export class QuizCategorySelectorComponent implements OnInit {
+export class QuizCategorySelectorComponent implements OnDestroy {
   @Input({ required: true })
   categoryList!: Observable<Array<QuizCategoryItem>>;
 
@@ -24,10 +23,9 @@ export class QuizCategorySelectorComponent implements OnInit {
     DifficultyLevel.HARD,
   ];
   public isDataFetching: boolean = false;
+  private subscription: Subscription = new Subscription();
 
-  constructor(private quizMakerService: QuizMakerService) {}
-
-  ngOnInit() {}
+  constructor(private quizService: QuizService) {}
 
   get categoryField(): FormControl {
     return this.categoryForm.get('category') as FormControl;
@@ -43,14 +41,16 @@ export class QuizCategorySelectorComponent implements OnInit {
       return;
     }
     this.isDataFetching = true;
-    this.quizMakerService
-      .createQuiz(this.categoryField.value, this.difficultyField.value)
-      .subscribe({
-        next: (response) => {
-          console.log(response);
-          this.isDataFetching = false;
-        },
-        error: (err) => (this.isDataFetching = false),
-      });
+    this.quizService.questionsList.next([]);
+    this.subscription.add(
+      this.quizService
+        .createQuiz(this.categoryField.value, this.difficultyField.value)
+        .pipe(finalize(() => (this.isDataFetching = false)))
+        .subscribe()
+    );
+  }
+
+  ngOnDestroy(): void {
+    this.subscription.unsubscribe();
   }
 }

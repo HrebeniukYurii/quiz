@@ -1,5 +1,6 @@
-import { NgModule } from '@angular/core';
+import { NgModule, inject } from '@angular/core';
 import { RouterModule, Route } from '@angular/router';
+import { CanMatchResultsPage } from './guard/can-match-results-page.guard';
 
 const routes: Array<Route> = [
   {
@@ -18,6 +19,7 @@ const routes: Array<Route> = [
       import('./quiz-results/quiz-results.module').then(
         (m) => m.QuizResultsModule
       ),
+    canMatch: [() => inject(CanMatchResultsPage).canMatch()],
   },
 ];
 

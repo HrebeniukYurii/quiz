@@ -1,5 +1,17 @@
 <div class="d-flex flex-column align-items-center w-100">
   <h1>Quiz maker</h1>
 
-  <app-quiz-category-selector class="w-100" [categoryList]="categoryList"></app-quiz-category-selector>
+  <app-quiz-category-selector *ngIf="(categoryList | async)?.length; else initializing"
+    class="w-100"
+    [categoryList]="categoryList">
+  </app-quiz-category-selector>
+
+  <app-quiz-questions *ngIf="questions.length !== 0"
+    class="w-100"
+    [questionsList]="questions">
+  </app-quiz-questions>
 </div>
+
+<ng-template #initializing>
+  <span>Initializing... Please, wait</span>
+</ng-template>

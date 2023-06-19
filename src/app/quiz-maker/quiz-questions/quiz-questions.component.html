@@ -1,0 +1,25 @@
+<div class="quiz-questions-container">
+  <form [formGroup]="qustionsGroup" (submit)="onSubmit()">
+    <div *ngFor="let item of questionsList; let i = index"
+      class="mb-4"
+      >
+      <span class="quiz-question" [innerHTML]="item.question"></span>
+
+      <app-quiz-answer-button *ngFor="let item of item.allAnswers"
+        [answerText]="item"
+        class="me-3"
+        [isSelectedAnswer]="isSelectedAnswer(i, item)"
+        (click)="markAsAnswer(i, item)"
+      >
+      </app-quiz-answer-button>
+    </div>
+
+    <button *ngIf="qustionsGroup.valid"
+      mat-raised-button
+      color="primary"
+      class="mt-4 py-4 w-100"
+    >
+      <span class="button-text"> Submit</span>
+    </button>
+  </form>
+</div>
