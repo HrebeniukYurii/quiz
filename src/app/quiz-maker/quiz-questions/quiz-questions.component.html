@@ -3,7 +3,7 @@
     <div *ngFor="let item of questionsList; let i = index"
       class="mb-4"
       >
-      <span class="quiz-question" [innerHTML]="item.question"></span>
+      <span class="quiz-question" [innerHTML]="item.question | sanitizer"></span>
 
       <app-quiz-answer-button *ngFor="let item of item.allAnswers"
         [answerText]="item"

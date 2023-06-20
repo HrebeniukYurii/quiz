@@ -78,10 +78,7 @@ export class QuizService {
               item.correct_answer,
             ]);
             allAnswers.sort(() => Math.random() - 0.5);
-            item.allAnswers = allAnswers.map(
-              (curr) =>
-                this.domSanitizer.sanitize(SecurityContext.HTML, curr) ?? ''
-            );
+            item.allAnswers = allAnswers;
           }
           return response;
         }),
@@ -89,12 +86,12 @@ export class QuizService {
       );
   }
 
-  public validateQuiz(answers: Array<string>, questins: Array<QuizQuestion>) {
+  public validateQuiz(answers: Array<string>, questions: Array<QuizQuestion>) {
     this.quizResults = [];
     for (let i = 0; i < answers.length; i++) {
       this.quizResults.push({
         userAnswer: answers[i],
-        correctAnswer: questins[i].correct_answer,
+        correctAnswer: questions[i].correct_answer,
       });
     }
     this.router.navigate([QUIZ_RESULTS]);
